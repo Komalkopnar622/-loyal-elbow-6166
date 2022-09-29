@@ -1,0 +1,33 @@
+create table of Admin
+=========================================================
+ create table admin(
+ 			id int primary key auto_increment,
+ 			 username varchar(20) not null,
+ 			 password varchar(20) unique
+    );
+    
+    create table of customer
+    ==========================================================
+    create table customer(
+     	cid int primary key auto_increment,
+    	cname  varchar(20) not null,
+     	address  varchar(20) not null,
+    	mobile  varchar(20)  unique,
+    	source varchar(20) not null,
+    	destination varchar(20) not null
+    	);
+    	
+    create table of Bus
+    ======================================================================
+    create table Bus(
+    	busNo int primary key ,
+    	busName varchar(20) NOT NULL,
+    	busRoute varchar(20) NOT NULL,
+    	busType varchar(20) NOT Null,
+    	seat int not null,
+    	departuretime Time unique,
+    	arrivalTime Time unique,
+    	date Date ,
+    	foreign key(busNo) references Customer(cid)
+    	); 
+    	
