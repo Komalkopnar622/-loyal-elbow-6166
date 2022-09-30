@@ -23,11 +23,24 @@ create table of Admin
     	busNo int primary key ,
     	busName varchar(20) NOT NULL,
     	busRoute varchar(20) NOT NULL,
+    	source varchar(20) NOT Null,
+    	destination varchar(20) NOT Null,
     	busType varchar(20) NOT Null,
     	seat int not null,
-    	departuretime Time unique,
-    	arrivalTime Time unique,
-    	date Date ,
-    	foreign key(busNo) references Customer(cid)
+    	departuretime Time ,
+    	arrivalTime Time,
+    	date Date 
     	); 
     	
+    	create table of Ticket
+    	===========================================
+    	create table Ticket_book(
+		custer_id int primary key,
+		bus_no int ,
+		source varchar(20) NOT Null,
+    	destination varchar(20) NOT Null,
+		foreign key(custer_id) references Customer(cid),
+		foreign key(bus_no) references Bus(busNo)
+		);
+		
+		

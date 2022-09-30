@@ -1,6 +1,8 @@
 package com.masai.bean;
 
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 
 public class Bus {
@@ -12,14 +14,22 @@ public class Bus {
 	private Time arriveTime;
 	
 	private Time departuretime;
-	private Date date;
+	private LocalDate date;
 	
 	public Bus() {
 		
 	}
 
+	public Bus(int busNo, String busname, String busRoute, String busType, int seat) {
+		super();
+		this.busNo = busNo;
+		this.busname = busname;
+		this.busRoute = busRoute;
+		this.busType = busType;
+		this.seat = seat;
+	}
 	public Bus(int busNo, String busname, String busRoute, String busType, int seat, Time arriveTime,
-			Time departuretime, Date date) {
+			Time departuretime, LocalDate date) {
 		super();
 		this.busNo = busNo;
 		this.busname = busname;
@@ -83,16 +93,16 @@ public class Bus {
 		return departuretime;
 	}
 
-	public void setDeparturetime(Time departuretime) {
-		this.departuretime = departuretime;
+	public void setDeparturetime(Time lt) {
+		this.departuretime = lt;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(LocalDate date2) {
+		this.date = date2;
 	}
 
 	@Override
