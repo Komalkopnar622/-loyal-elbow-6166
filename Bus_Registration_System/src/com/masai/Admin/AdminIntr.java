@@ -19,6 +19,7 @@ public interface AdminIntr {
 	
 	public String registerbus(Bus b)throws BusException; 
 	
-	public List conformation(String b) throws TicketException; 
+	public List conformation(String b) throws TicketException,BusException; 
+	public List conformationSeat() throws TicketException,BusException; 
 	
 }

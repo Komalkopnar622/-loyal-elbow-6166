@@ -46,7 +46,9 @@ public class HRM {
 		try {
 			
 			boolean ans=ad.login(username, password);
+			
 			if(ans) {
+				System.out.println("Login Successfully!!!!!!!!!!");
 				System.out.println("Welcome To Admin:"+username);
 				System.out.println("1 : add a new Bus");
 				System.out.println("2 : Show all buses:");
@@ -81,8 +83,8 @@ public class HRM {
 //						String arrivaltime=sc.next();
 //						LocalTime la=LocalTime.parse(arrivaltime);
 						
-						
-//				       LocalDate date=LocalDate.now();
+//						System.out.println("Enter Date:");
+//				      Double date=sc.nextDouble();
 				        
 				        	
 				        Bus bus= new Bus();
@@ -101,6 +103,7 @@ public class HRM {
 					}
 					else if(x==2) {
 						List<Bus> l1=ad.showBus();
+						if(l1.size() !=0) {
 						l1.forEach(b ->{
 							
 							System.out.println("Bus No is :"+b.getBusNo());
@@ -114,6 +117,10 @@ public class HRM {
 							
 							System.out.println("=======================");
 						});
+						}
+						else {
+							System.out.println("No Bus Avalible");
+						}
 						
 					}
 					else if(x==3) {
@@ -122,7 +129,7 @@ public class HRM {
 						String b=sc.next();
 					List<CustomerDTO> l1=ad.conformation(b);
 						
-						
+						if(l1.size() !=0) {
 						l1.forEach(cb->{
 							System.out.println("Bus No is :"+cb.getBno());
 							
@@ -131,26 +138,42 @@ public class HRM {
 							System.out.println("Avalibale  Seat is: "+cb.getSeat());
 							System.out.println("Customer Name is: "+cb.getCn());
 							System.out.println("Cutomer Address is: "+cb.getA());
+							
 							System.out.println("Customer Mobile is: "+cb.getM());
 							
 						System.out.println("=============================================");
 						});
+						}
+						else {
+							System.out.println("No customer Found!!");
+						}
 
 						
 						
 					}
 					else if(x==4) {
-						CustomerLoginUseCase xx= new CustomerLoginUseCase();
-						List<CustomerDTO> d=xx.avalibleTicket();
-						d.forEach(c->{
-							System.out.println("Bus No is :"+c.getBno());
+						List<CustomerDTO> l1=ad.conformationSeat();
+						if(l1.size() !=0) {
+						l1.forEach(cx->{
+							System.out.println("Bus No is :"+cx.getBno());
 							
+							System.out.println("Bus Name is: "+cx.getBusname());
 							
-							System.out.println("Avalibale  Seat is: "+c.getSeat());
-							
-							System.out.println("=============================================");
+							System.out.println("Avalibale  Seat is: "+cx.getSeat());
+							System.out.println("Customer Name is: "+cx.getCn()+" "+" Sucessfully bookes");
+							System.out.println("Cutomer Address is: "+cx.getA());
+							System.out.println("Customer Mobile is: "+cx.getM());
+						
+						System.out.println("=============================================");
 						});
+						}
+						else {
+							System.out.println("Doesn't Book any Ticket!!");
+						}
 					
+						
+					}
+					else if(x==5) {
 						
 					}
 					else {
@@ -167,6 +190,11 @@ public class HRM {
 				}
 			
 			}
+			else {
+				System.out.println("Username and Password Wrong!");
+			}
+			System.out.println("\n 1. Login As Admin.\n 2.Login As Customer.");
+			ch=sc.nextInt();
 			
 		} catch (AdminException e) {
 			
@@ -237,26 +265,30 @@ public class HRM {
 					int ticket=sc.nextInt();
 					String ans=bs.bookTicket(source, des, cid, bno,ticket);
 					System.out.println(ans);
+					if(ans.equals("Ticket Book  Sucessfully.. ")) {
+						
 					
-					CustomerLoginUseCase xx= new CustomerLoginUseCase();
+						CustomerLoginUseCase xx= new CustomerLoginUseCase();
 					List<CustomerDTO> d=xx.avalibleTicket();
 					d.forEach(c->{
 						System.out.println("Bus No is :"+c.getBno());
 						
 						
 						System.out.println("Avalibale  Seat is: "+c.getSeat());
+						
 						String str=	xx.UpdateSeat(c.getBno(),c.getSeat());
 						System.out.println("=============================================");
 					});
+					}
 					
 				}
-				else if(num==3) {
+				else if(num==4) {
 					System.out.println("Enter Customer_id");
 					int id=sc.nextInt();
 					bs.cancleTicket(id);
 					
 				}
-				else if(num==4) {
+				else if(num==5) {
 					
 				}
 				else {

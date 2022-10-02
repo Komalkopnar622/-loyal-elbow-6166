@@ -80,9 +80,9 @@ public class BusImpl  implements BusIntr{
 			int x=ps.executeUpdate();
 			if(x>0)
 				
-			System.out.println("Recored deleted Sucessfully");
+			System.out.println("Ticket Cancle Sucessfully");
 			else {
-				System.out.println("Not");
+				System.out.println("does'nt cancle");
 			}
 			
 		} catch (SQLException e) {

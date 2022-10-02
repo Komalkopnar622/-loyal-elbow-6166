@@ -14,7 +14,7 @@ public class Bus {
 	private Time arriveTime;
 	
 	private Time departuretime;
-	private LocalDate date;
+	private Date date;
  
 	private String source;
 	private String destination;
@@ -34,7 +34,7 @@ public class Bus {
 		this.destination=destination;
 	}
 	public Bus(int busNo, String busname, String busRoute, String busType, int seat, Time arriveTime,
-			Time departuretime, LocalDate date,String source,String destination) {
+			Time departuretime, Date date,String source,String destination) {
 		super();
 		this.busNo = busNo;
 		this.busname = busname;
@@ -104,11 +104,11 @@ public class Bus {
 		this.departuretime = lt;
 	}
 
-	public LocalDate getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(LocalDate date2) {
+	public void setDate(Date date2) {
 		this.date = date2;
 	}
 

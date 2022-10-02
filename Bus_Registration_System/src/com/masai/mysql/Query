@@ -1,3 +1,5 @@
+use superfast;
+
 create table of Admin
 =========================================================
  create table admin(
@@ -44,12 +46,4 @@ create table of Admin
 		foreign key(bus_no) references Bus(busNo)
 		);
 		
-		create table of check_seat;
-		create table check_seat(
-		custer_id int ,
-		bus_no int NOT NULL ,
-		avilable_seat int,
-		foreign key(custer_id) references Customer(cid),
-		foreign key(bus_no) references Bus(busNo)
-		);
 		

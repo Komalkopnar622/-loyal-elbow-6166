@@ -60,15 +60,16 @@ try (Connection conn=DBUtil.provideConnection()){
 						String r= rs.getString("busRoute");
 						String t= rs.getString("busType");
 						int s= rs.getInt("seat");
+						
+					Time dtime= rs.getTime("departuretime");
+							
+						Time atime= rs.getTime("arrivalTime");
+						Date date= rs.getDate("date");
+							
 						String source=rs.getString("source");
 						String destination=rs.getString("destination");
-//						Time dtime= rs.getTime("departuretime");
-//								
-//						Time atime= rs.getTime("arrivalTime");
-//						Date date= rs.getDate("date");
-								
 						
-					Bus busobj=new Bus(bno, bname, r, t, s,source,destination);	
+					Bus busobj=new Bus(bno, bname, r, t, s,atime,dtime,date,source,destination);	
 					bus.add(busobj);
 					}
 				} catch (SQLException e) {
@@ -92,6 +93,7 @@ try (Connection conn=DBUtil.provideConnection()){
 			ps.setString(3, b.getBusRoute());
 			ps.setString(4, b.getBusType());
 			ps.setInt(5, b.getSeat());
+//			ps.setDouble(6, b.getDate());
 			ps.setString(6, b.getSource());
 			ps.setString(7, b.getDestination());
 			
@@ -114,7 +116,7 @@ try (Connection conn=DBUtil.provideConnection()){
 	}
 
 	@Override
-	public List<CustomerDTO> conformation(String busname) throws TicketException {
+	public List<CustomerDTO> conformation(String busname) throws TicketException, BusException {
 		List<CustomerDTO> l1=new ArrayList();
 		Customer c=new Customer();
 		Bus b=new Bus();
@@ -126,7 +128,7 @@ try (Connection conn=DBUtil.provideConnection()){
 		ps.setString(1, busname);
 			
 			ResultSet rs= ps.executeQuery();
-			System.out.println("Hello");
+			
 			
 			while(rs.next()) {
 				int bn= rs.getInt("busNo");
@@ -136,8 +138,9 @@ try (Connection conn=DBUtil.provideConnection()){
 				String cn= rs.getString("cname");
 				String m= rs.getString("mobile");
 				String a= rs.getString("address");
-				CustomerDTO cd=new CustomerDTO(bn,busn,seat,cn,m,a);
-				l1.add(cd);
+				
+					CustomerDTO cd=new CustomerDTO(bn,busn,seat,cn,m,a);
+					l1.add(cd);
 				
 	 			
 	 			
@@ -146,10 +149,52 @@ try (Connection conn=DBUtil.provideConnection()){
 				
 			} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+				throw new BusException(e.getMessage());
 		}
-		if(l1.isEmpty())
-			throw new TicketException("No Customer found in that bus");
+		//if(l1.isEmpty())
+//			throw new TicketException("No Customer found in that bus");
+		
+		return l1;
+
+		
+	}
+	@Override
+	public List<CustomerDTO> conformationSeat() throws TicketException, BusException {
+		List<CustomerDTO> l1=new ArrayList();
+		Customer c=new Customer();
+		Bus b=new Bus();
+		
+		try (Connection conn = DBUtil.provideConnection()){
+			PreparedStatement ps= conn.prepareStatement("select b.busNo, b.busName,b.seat,c.cid,c.cname, c.address,c.mobile "
+					+ "from  bus b INNER JOIN customer c INNER JOIN Ticket_book tb "
+					+ "ON b.busNo = tb.bus_no AND c.cid = tb.custer_id");
+		
+			
+			ResultSet rs= ps.executeQuery();
+			
+			
+			while(rs.next()) {
+				int bn= rs.getInt("busNo");
+				String busn= rs.getString("busName");
+				int seat=rs.getInt("seat");
+				int cid=rs.getInt("cid");
+				String cn= rs.getString("cname");
+				String m= rs.getString("mobile");
+				String a= rs.getString("address");
+				
+				CustomerDTO cd=new CustomerDTO(bn,busn,seat,cn,m,a);
+				l1.add(cd);
+				
+	 			
+			}
+				
+				
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+				throw new BusException(e.getMessage());
+		}
+		//if(l1.isEmpty())
+//			throw new TicketException("No Customer found in that bus");
 		
 		return l1;
 

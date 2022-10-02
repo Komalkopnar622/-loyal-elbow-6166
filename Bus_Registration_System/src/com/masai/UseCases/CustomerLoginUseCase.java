@@ -15,7 +15,7 @@ import com.masai.utility.DBUtil;
 public class CustomerLoginUseCase {
 	
 	public String UpdateSeat(int bno,int seat) {
-		String message="Hello";
+		
 		try(Connection conn= DBUtil.provideConnection()){
 			PreparedStatement ps= conn.prepareStatement
 					("UPDATE Bus SET seat=? Where  busNo=?");

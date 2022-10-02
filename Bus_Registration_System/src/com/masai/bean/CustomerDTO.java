@@ -7,7 +7,45 @@ public class CustomerDTO {
 	private String cn;
 	private String m;
 	private String a;
+	private int t;
 	
+	public int getT() {
+		return t;
+	}
+
+
+
+
+
+
+
+	public void setT(int t) {
+		this.t = t;
+	}
+
+
+
+
+
+
+
+	public CustomerDTO(int bno, String busname, int seat, String cn, String m, String a, int t) {
+		super();
+		this.bno = bno;
+		this.busname = busname;
+		this.seat = seat;
+		this.cn = cn;
+		this.m = m;
+		this.a = a;
+		this.t = t;
+	}
+
+
+
+
+
+
+
 	public CustomerDTO(int bn, String busn, int seat, String cn, String m, String a){
 		super();
 		this.bno = bn;
