@@ -60,13 +60,15 @@ try (Connection conn=DBUtil.provideConnection()){
 						String r= rs.getString("busRoute");
 						String t= rs.getString("busType");
 						int s= rs.getInt("seat");
+						String source=rs.getString("source");
+						String destination=rs.getString("destination");
 //						Time dtime= rs.getTime("departuretime");
 //								
 //						Time atime= rs.getTime("arrivalTime");
 //						Date date= rs.getDate("date");
 								
 						
-					Bus busobj=new Bus(bno, bname, r, t, s);	
+					Bus busobj=new Bus(bno, bname, r, t, s,source,destination);	
 					bus.add(busobj);
 					}
 				} catch (SQLException e) {
@@ -83,13 +85,15 @@ try (Connection conn=DBUtil.provideConnection()){
 		
 		try(Connection conn= DBUtil.provideConnection()){
 			PreparedStatement ps= conn.prepareStatement
-					("insert into Bus(busNo,busName,busRoute,busType,seat) values(?,?,?,?,?)");
+					("insert into Bus(busNo,busName,busRoute,busType,seat,source,destination) values(?,?,?,?,?,?,?)");
 			
 			ps.setInt(1, b.getBusNo());
 			ps.setString(2, b.getBusname());
 			ps.setString(3, b.getBusRoute());
 			ps.setString(4, b.getBusType());
 			ps.setInt(5, b.getSeat());
+			ps.setString(6, b.getSource());
+			ps.setString(7, b.getDestination());
 			
 //			ps.setTime(6, b.getArriveTime());
 //			ps.setTime(7, b.getDeparturetime());
@@ -116,10 +120,10 @@ try (Connection conn=DBUtil.provideConnection()){
 		Bus b=new Bus();
 		
 		try (Connection conn = DBUtil.provideConnection()){
-			PreparedStatement ps= conn.prepareStatement("select b.busNo, b.busName,b.seat, c.cname, c.address,c.mobile "
+			PreparedStatement ps= conn.prepareStatement("select b.busNo, b.busName,b.seat,c.cid,c.cname, c.address,c.mobile "
 					+ "from  bus b INNER JOIN customer c INNER JOIN Ticket_book tb "
-					+ "ON b.busNo = tb.bus_no AND c.cid = tb.custer_id");
-//			ps.setString(1, busname);
+					+ "ON b.busNo = tb.bus_no AND c.cid = tb.custer_id AND b.busName=?");
+		ps.setString(1, busname);
 			
 			ResultSet rs= ps.executeQuery();
 			System.out.println("Hello");
@@ -128,18 +132,19 @@ try (Connection conn=DBUtil.provideConnection()){
 				int bn= rs.getInt("busNo");
 				String busn= rs.getString("busName");
 				int seat=rs.getInt("seat");
+				int cid=rs.getInt("cid");
 				String cn= rs.getString("cname");
 				String m= rs.getString("mobile");
 				String a= rs.getString("address");
-				
-			
 				CustomerDTO cd=new CustomerDTO(bn,busn,seat,cn,m,a);
-				
 				l1.add(cd);
-
+				
+	 			
+	 			
 			}
-
-		} catch (SQLException e) {
+				
+				
+			} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -26,7 +26,7 @@ public class BusImpl  implements BusIntr{
 	}
 
 	@Override
-	public String bookTicket(String source, String destination,int cid,int busno) {
+	public String bookTicket(String source, String destination,int cid,int busno,int ticket) {
 		String message ="Ticket Not Booked.";
 		try(Connection con=DBUtil.provideConnection()) {
 			PreparedStatement ps= con.prepareStatement("select * from customer where cid =?");
@@ -37,42 +37,38 @@ public class BusImpl  implements BusIntr{
 				ps2.setInt(1, busno);
 				ps2.setString(2, source);
 				ps2.setString(3,destination);
-				System.out.println("Hi");
+				
 		 		ResultSet rs2= ps2.executeQuery();
 		 		
-		 		if(rs2.next()) {
-		 			PreparedStatement ps3= con.prepareStatement("insert into Ticket_book values(?,?,?,?)");
+		 		if(rs2.next()) { 
+		 			
+		 			PreparedStatement ps3= con.prepareStatement("insert into Ticket_book values(?,?,?,?,?)");
+		 			
 		 			ps3.setInt(1, cid);
 		 			ps3.setInt(2, busno);
-		 			ps3.setString(3,source );
-		 			ps3.setString(4, destination);
+		 			ps3.setInt(3, ticket);
+		 			ps3.setString(4,source );
+		 			ps3.setString(5, destination);
 		 			
 		 			int x= ps3.executeUpdate();
-		 			System.out.println("Hello");
-		 			if(x > 0)
-		 				message = "Ticket Book  Sucessfully.. ";
-		 			else
-		 				throw new TicketException("Ticket not Book");
+		 			if(x > 0) message = "Ticket Book  Sucessfully.. ";
+		 			else throw new TicketException("Ticket not Book");
 
-		 			
-		 		}
-		 		
-		 		
-		 			
+			 				
+			 }
 
-			}
-
-		} catch (SQLException e) {
+		 }
+		}catch (SQLException e) {
+			e.getMessage();
 			
-			e.printStackTrace();
 		} catch (TicketException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e.getMessage();
 		}
 		
 
 		return message;
-	}
+	
+}
 
 	@Override
 	public String cancleTicket(int bus_no) {

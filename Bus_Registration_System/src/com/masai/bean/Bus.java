@@ -15,21 +15,26 @@ public class Bus {
 	
 	private Time departuretime;
 	private LocalDate date;
+ 
+	private String source;
+	private String destination;
 	
 	public Bus() {
 		
 	}
 
-	public Bus(int busNo, String busname, String busRoute, String busType, int seat) {
+	public Bus(int busNo, String busname, String busRoute, String busType, int seat,String source,String destination) {
 		super();
 		this.busNo = busNo;
 		this.busname = busname;
 		this.busRoute = busRoute;
 		this.busType = busType;
 		this.seat = seat;
+		this.source=source;
+		this.destination=destination;
 	}
 	public Bus(int busNo, String busname, String busRoute, String busType, int seat, Time arriveTime,
-			Time departuretime, LocalDate date) {
+			Time departuretime, LocalDate date,String source,String destination) {
 		super();
 		this.busNo = busNo;
 		this.busname = busname;
@@ -39,6 +44,8 @@ public class Bus {
 		this.arriveTime = arriveTime;
 		this.departuretime = departuretime;
 		this.date = date;
+		this.source=source;
+		this.destination=destination;
 	}
 
 	public int getBusNo() {
@@ -105,12 +112,30 @@ public class Bus {
 		this.date = date2;
 	}
 
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
 	@Override
 	public String toString() {
 		return "Bus [busNo=" + busNo + ", busname=" + busname + ", busRoute=" + busRoute + ", busType=" + busType
 				+ ", seat=" + seat + ", arriveTime=" + arriveTime + ", departuretime=" + departuretime + ", date="
-				+ date + "]";
+				+ date + ", source=" + source + ", destination=" + destination + "]";
 	}
+
+	
 	
 	
 	

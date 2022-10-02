@@ -26,7 +26,7 @@ import BusDAO.BusImpl;
 import BusDAO.BusIntr;
 
 public class HRM {
-	static int count=1;
+
 	static SimpleDateFormat myFormat = new SimpleDateFormat("dd MM yyyy");
 	public static void selectOption() throws BusException, TicketException {
 		Scanner sc =new Scanner(System.in);
@@ -34,7 +34,7 @@ public class HRM {
 		BusIntr bs=new BusImpl();
 		
 		System.out.println("\n Please Select option to continue: ");
-		System.out.println("\n 1. Login As Admin.\n 2.Login As Customer.\n 3.Signup As Customer");
+		System.out.println("\n 1. Login As Admin.\n 2.Login As Customer.");
 		int ch=sc.nextInt();
 		switch (ch) {
 		case 1: {
@@ -68,6 +68,11 @@ public class HRM {
 						System.out.println("Enter Seat in Bus:");
 						int seat=sc.nextInt();
 						
+						System.out.println("Enter Bus Source:");
+						String source=sc.next();
+						System.out.println("Enter Bus Destination:");
+						String des=sc.next();
+						
 //						System.out.println("Enter departure Time:");
 //						 
 //						String departuretime =sc.next();
@@ -86,6 +91,8 @@ public class HRM {
 						bus.setBusRoute(broute);
 						bus.setBusType(btype);
 						bus.setSeat(seat);
+						bus.setSource(source);
+						bus.setDestination(des);
 //						bus.setDate(date);
 						
 					String result=	ad.registerbus(bus);
@@ -113,23 +120,37 @@ public class HRM {
 						
 						System.out.println("Enter bus name:");
 						String b=sc.next();
-						List<CustomerDTO> l1=ad.conformation(b);
+					List<CustomerDTO> l1=ad.conformation(b);
 						
 						
 						l1.forEach(cb->{
 							System.out.println("Bus No is :"+cb.getBno());
+							
 							System.out.println("Bus Name is: "+cb.getBusname());
-							int total=cb.getSeat()-count;
-							System.out.println("Avalibale  Seat is: "+total);
+							
+							System.out.println("Avalibale  Seat is: "+cb.getSeat());
 							System.out.println("Customer Name is: "+cb.getCn());
 							System.out.println("Cutomer Address is: "+cb.getA());
 							System.out.println("Customer Mobile is: "+cb.getM());
-							count++;
+							
+						System.out.println("=============================================");
 						});
 
 						
+						
 					}
 					else if(x==4) {
+						CustomerLoginUseCase xx= new CustomerLoginUseCase();
+						List<CustomerDTO> d=xx.avalibleTicket();
+						d.forEach(c->{
+							System.out.println("Bus No is :"+c.getBno());
+							
+							
+							System.out.println("Avalibale  Seat is: "+c.getSeat());
+							
+							System.out.println("=============================================");
+						});
+					
 						
 					}
 					else {
@@ -202,7 +223,7 @@ public class HRM {
 						System.out.println("=======================");
 					});
 				}
-				else if(num==2){
+				else if(num==3){
 				
 					System.out.println("Enter Source:");
 					String source=sc.next();
@@ -212,8 +233,21 @@ public class HRM {
 					int cid=sc.nextInt();
 					System.out.println("Enter BusNo:");
 					int bno=sc.nextInt();
-					String ans=bs.bookTicket(source, des, cid, bno);
+					System.out.println("Enter No of seat you want to book:");
+					int ticket=sc.nextInt();
+					String ans=bs.bookTicket(source, des, cid, bno,ticket);
 					System.out.println(ans);
+					
+					CustomerLoginUseCase xx= new CustomerLoginUseCase();
+					List<CustomerDTO> d=xx.avalibleTicket();
+					d.forEach(c->{
+						System.out.println("Bus No is :"+c.getBno());
+						
+						
+						System.out.println("Avalibale  Seat is: "+c.getSeat());
+						String str=	xx.UpdateSeat(c.getBno(),c.getSeat());
+						System.out.println("=============================================");
+					});
 					
 				}
 				else if(num==3) {
@@ -242,6 +276,7 @@ public class HRM {
 		
 					
 		}
+		System.out.println("Please Correct Choice!");
 		
 		}
 		

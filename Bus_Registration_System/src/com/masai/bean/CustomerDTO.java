@@ -24,6 +24,21 @@ public class CustomerDTO {
 
 
 
+	public CustomerDTO() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public CustomerDTO(int bn, int seat) {
+		super();
+		this.bno = bn;
+		
+		this.seat = seat;
+	}
+
+
+
+
 	public int getBno() {
 		return bno;
 	}

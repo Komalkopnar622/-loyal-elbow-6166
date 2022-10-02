@@ -36,11 +36,20 @@ create table of Admin
     	===========================================
     	create table Ticket_book(
 		custer_id int primary key,
-		bus_no int ,
+		bus_no int NOT NULL ,
+		noof_ticket int,
 		source varchar(20) NOT Null,
     	destination varchar(20) NOT Null,
 		foreign key(custer_id) references Customer(cid),
 		foreign key(bus_no) references Bus(busNo)
 		);
 		
+		create table of check_seat;
+		create table check_seat(
+		custer_id int ,
+		bus_no int NOT NULL ,
+		avilable_seat int,
+		foreign key(custer_id) references Customer(cid),
+		foreign key(bus_no) references Bus(busNo)
+		);
 		
